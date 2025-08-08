@@ -16,8 +16,10 @@ This library is designed for developers who need a single, reliable tool for dat
 ### 👤 Author Information
 
 -   **Author:** Mallik Mohammad Musaddiq
--   **Email:** `mallikmusaddiq1@gmail.com`
--   **GitHub:** `https://github.com/mallikmusaddiq1/datachop`
+-   **Email:** [mallikmusaddiq1@gmail.com](mailto: mallikmusaddiq1@gmail.com)
+-   **GitHub:** [https://github.com/mallikmusaddiq1/datachop
+](https://github.com/mallikmusaddiq1/datachop)
+
 
 ---
 
