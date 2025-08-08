@@ -2,10 +2,10 @@
 
 ![GitHub stars](https://img.shields.io/github/stars/mallikmusaddiq1/datachop?style=flat-square)
 ![PyPI](https://img.shields.io/pypi/v/datachop?style=flat-square)
-![GitHub license](https://img.shields.io/github/license/mallikmusaddiq1/datachop?style=flat-square)
-![Python versions](https://img.shields.io/pypi/pyversions/datachop?style=flat-square)
 ![PyPI Downloads](https://img.shields.io/pypi/dm/datachop?style=flat-square)
 ![GitHub top language](https://img.shields.io/github/languages/top/mallikmusaddiq1/datachop?style=flat-square)
+![GitHub license](https://img.shields.io/github/license/mallikmusaddiq1/datachop?style=flat-square)
+![Python versions](https://img.shields.io/pypi/pyversions/datachop?style=flat-square)
 
 A high-performance, robust, and versatile Python library for slicing and processing various data types and files. Datachop goes beyond simple string slicing, providing a unified and intuitive API for handling everything from Unicode text to complex file formats like images, videos, audio, and documents.
 
