@@ -2,12 +2,12 @@
 
 ![GitHub stars](https://img.shields.io/github/stars/mallikmusaddiq1/datachop?style=flat-square)
 ![PyPI](https://img.shields.io/pypi/v/datachop?style=flat-square)
-![PyPI Downloads](https://img.shields.io/pypi/dm/datachop?style=flat-square)
-![GitHub top language](https://img.shields.io/github/languages/top/mallikmusaddiq1/datachop?style=flat-square)
 ![GitHub license](https://img.shields.io/github/license/mallikmusaddiq1/datachop?style=flat-square)
 ![Python versions](https://img.shields.io/pypi/pyversions/datachop?style=flat-square)
+![PyPI Downloads](https://img.shields.io/pypi/dm/datachop?style=flat-square)
+![GitHub top language](https://img.shields.io/github/languages/top/mallikmusaddiq1/datachop?style=flat-square)
 
-A high-performance, robust, and versatile Python library for slicing and processing various data types and files. Datachop goes beyond simple string slicing, providing a unified and intuitive API for handling everything from Unicode text to complex file formats like images, videos, audio, and documents.
+A high-performance, robust Python library for slicing and processing various data types and files. Datachop goes beyond simple string slicing, providing a unified and intuitive API for handling everything from Unicode text to complex file format like images.
 
 This library is designed for developers who need a single, reliable tool for data extraction and manipulation, ensuring correctness and efficiency across all data types.
 
@@ -16,161 +16,113 @@ This library is designed for developers who need a single, reliable tool for dat
 ### 👤 Author Information
 
 -   **Author:** Mallik Mohammad Musaddiq
--   **Email:** [mallikmusaddiq1@gmail.com](mailto:mallikmusaddiq1@gmail.com)
--   **GitHub:** [https://github.com/mallikmusaddiq1/datachop
-](https://github.com/mallikmusaddiq1/datachop)
+-   **Email:** `mallikmusaddiq1@gmail.com`
+-   **GitHub:** `https://github.com/mallikmusaddiq1/datachop`
 
+## Key Features
 
----
+- **Universal Slicing**: A single function, `chop()`, handles strings, bytes, lists, and files.
+- **Unicode Grapheme Support**: Correctly slices strings containing multi-character emojis and ligatures.
+- **Comprehensive File Handling**:
+  - **Text Files**: Slice by line or character.
+  - **Binary Files**: Slice by byte, with high-performance `mmap` support for large files.
+  - **Specialized Files**: Built-in support for images (`.png`, `.jpeg`, `.gif`), CSV, and JSON.
+- **Advanced Slicing Operations**: Supports single indices, standard slice objects, and iterables of indices.
+- **Robust Error Handling**: Specific, descriptive error classes provide clear feedback.
+- **Security & Performance**:
+  - **Path Sandboxing**: Prevents path traversal vulnerabilities for file operations.
+  - **Thread-safe Caching**: Utilizes a thread-safe LRU cache for frequently accessed data, with optional Redis support.
+  - **Efficient Large File Processing**: Leverages `mmap` and streaming for memory-efficient handling.
+- **Extensible Plugin System**: Easily add support for new data formats and file types.
+- **Optional Dependencies**: Features are gracefully disabled if optional libraries are not installed.
+- **Asynchronous I/O Ready**: The architecture is designed to easily integrate with `asyncio`.
 
-## 🚀 Features
+## Installation
 
--   **Universal Slicing:** A single `chop()` function handles strings, lists, bytes, files, and more.
--   **Emoji-Aware Slicing:** Correctly slices strings based on **Unicode grapheme clusters**, not raw characters, ensuring emojis and multi-character symbols are handled properly.
--   **File Format Support:**
-    -   **Text Files:** Slice by line, character, or byte with automatic encoding detection.
-    -   **Images:** Crop and extract pixels or regions from PNG, JPEG, GIF, and TIFF files.
-    -   **Videos:** Extract frames or sub-clips from MP4, AVI, MOV, and MKV files.
-    -   **Audio:** Slice audio by time or frame count from MP3, WAV, and FLAC files.
-    -   **Documents:** Extract pages from PDFs, paragraphs from DOCX/ODT files, and rows from CSV/JSON.
--   **Performance & Efficiency:**
-    -   Uses `mmap` for efficient file I/O on large files.
-    -   Thread-safe caching (`LRUCache`) for repeated operations.
-    -   Asynchronous I/O and multi-threading for parallel processing.
--   **Extensibility:** A powerful plugin system allows developers to easily add support for new file types and custom slicing logic.
--   **Security & Robustness:**
-    -   **Sandboxing:** Prevents path traversal attacks with a secure file handling context.
-    -   **Comprehensive Error Handling:** Provides clear, actionable error codes for every possible failure (`CHOP-001`, `CHOP-002`, etc.).
--   **Dependency Management:** Optional dependencies are lazily loaded and gracefully handle missing packages.
-
----
-
-## 📦 Installation
-
-Install Datachop using pip. For advanced features, you can install optional dependencies with an `[extras]` flag.
+You can install DataChop using pip:
 
 ```bash
-# Basic installation for string, list, and text file slicing
 pip install datachop
 
-# Install with all optional dependencies for full functionality
+For advanced features like Unicode grapheme support, image slicing, or encoding detection, install the optional dependencies:
 pip install datachop[full]
 
-Optional Dependencies
- * Pillow: Image processing (PNG, JPEG, etc.).
- * moviepy, ffmpeg-python: Video and GIF processing.
- * pydub: Audio processing (MP3, WAV, etc.).
- * PyPDF2, python-docx, odfpy: Document processing (PDF, DOCX, ODT).
- * redis: Distributed caching for large-scale applications.
- * tqdm: Progress bars for long-running operations.
-📖 Usage
-Slicing a String
-Datachop's chop() function intelligently handles Unicode and emojis.
-import asyncio
-from datachop import chop
+This will install regex, Pillow, numpy, and charset-normalizer.
+Quick Start
+import datachop as dc
 
-async def main():
-    text = "Hello, World! 😊👍🚀"
-    
-    # Slice a single character (grapheme)
-    result = await chop(text, 14) 
-    # result: '👍'
+# 1. String Slicing with Unicode Support
+string_data = "Hello😊👍 world!"
+result = dc.chop(string_data, slice(5, 7))
+# Output: "😊👍"
 
-    # Slice a range
-    result = await chop(text, slice(7, 12))
-    # result: 'World'
+# 2. File Handling (by lines)
+# Assume 'sample.txt' contains:
+# Line 1
+# Line 2
+# Line 3
+lines = dc.chop("sample.txt", slice(1, 3), file_mode='lines')
+# Output: ['Line 2', 'Line 3']
 
-    # Get length of a string in graphemes
-    length = await chop(text)
-    # length: 17
+# 3. Image Slicing (requires Pillow and numpy)
+# Assume 'image.png' is a 100x100 pixel image
+cropped_image = dc.chop("image.png", (0, 0, 10, 10))
+# 'cropped_image' is a PIL Image object of size 10x10
 
-asyncio.run(main())
+# 4. Get Length (Universal)
+length_of_file = dc.get_length("sample.txt", file_mode='lines')
+# Output: 3
+length_of_string = dc.get_length(string_data)
+# Output: 13 (correctly counts graphemes)
 
-Slicing a File (by line)
-You can slice text files by line number, just like a list.
-import asyncio
-from datachop import chop
-
-# Create a sample file
-with open("sample.txt", "w", encoding="utf-8") as f:
-    f.write("Line 1\nLine 2\nLine 3\nLine 4")
-
-async def main():
-    # Get a specific line
-    line = await chop("sample.txt", 2, file_mode='lines')
-    # line: 'Line 3'
-
-    # Slice multiple lines
-    lines = await chop("sample.txt", slice(0, 3), file_mode='lines')
-    # lines: ['Line 1', 'Line 2', 'Line 3']
-
-asyncio.run(main())
-
-Slicing an Image
-Extract pixels or crop a specific region from an image.
-import asyncio
-from datachop import chop, get_length
-from PIL import Image
-
-# Create a sample image
-img = Image.new('RGB', (100, 100), color='blue')
-img.save("sample.png")
-
-async def main():
-    # Get the total number of pixels
-    pixel_count = await get_length("sample.png", file_mode='pixels')
-    # pixel_count: 10000
-
-    # Get the pixel at index 5000 (roughly center)
-    pixel = await chop("sample.png", 5000)
-    # pixel: (0, 0, 255)
-
-    # Crop a 50x50 region and save it to a new file
-    cropped_image = await chop(
-        "sample.png", 
-        region=(25, 25, 75, 75), 
-        export_path="cropped.png"
-    )
-    # A new file 'cropped.png' is created with the cropped region.
-    # The function also returns a PIL Image object.
-
-asyncio.run(main())
-
-Slicing a Video (by time)
-Extract a sub-clip from a video file.
-import asyncio
-from datachop import chop
-
-async def main():
-    # This requires an existing video file like "video.mp4"
-    # and the 'moviepy' and 'ffmpeg-python' dependencies.
-    
-    # Extract a 5-second clip from 10s to 15s and save it
-    clip = await chop(
-        "video.mp4", 
-        slice(10, 15), 
-        file_mode='time', 
-        export_path="clip.mp4"
-    )
-    # A new file 'clip.mp4' is created.
-
-asyncio.run(main())
-
-📝 API Reference
-chop(obj, index_or_slice, **kwargs)
-The primary function for all slicing operations.
+API Reference
+chop(obj, index_or_slice=None, **kwargs)
+The main function for slicing.
 Parameters:
- * obj: The data to be sliced (string, list, file path, file object, etc.).
- * index_or_slice: An int for a single element, a slice object, or an iterable of indices.
+ * obj: The data source. Can be a string, list, bytes, file path, or a file-like object.
+ * index_or_slice:
+   * An integer index (e.g., 5).
+   * A slice object (e.g., slice(0, 5)).
+   * An Iterable of indices (e.g., [0, 2, 5]).
+   * A tuple (x1, y1, x2, y2) for image regions.
  * **kwargs:
-   * file_mode (str): Specifies how to read a file ('lines', 'bytes', 'pixels', 'frames', etc.). This is inferred if not provided.
-   * region (tuple): A 4-tuple (x1, y1, x2, y2) for cropping images.
-   * export_path (str): Path to save the sliced content (e.g., cropped image, video clip).
-   * compression (str): Type of compression for archives ('zip', 'gz', etc.).
-   * decode (str): Decode sliced bytes into a string using the specified encoding.
-get_length(obj, **kwargs)
-Returns the length of a sequence or a file based on the specified mode.
+   * file_mode: str, e.g., 'lines', 'bytes', 'pixels'.
+   * encoding: str, character encoding for text files.
+   * export_path: str, path to save results (e.g., a cropped image).
+get_length(obj, file_mode=None)
+Returns the length of a sequence or file.
 Parameters:
- * obj: The data object (string, list, file path).
- * **kwargs: Same as chop().
-<!-- end list -->
+ * obj: The object to measure.
+ * file_mode: str, e.g., 'lines', 'bytes', 'pixels'.
+Extensibility
+DataChop's plugin system allows you to add support for new data formats. Simply create a class that inherits from ChopPlugin and implement the process() method.
+chop_plugins/my_plugin.py:
+from datachop import ChopPlugin, register_plugin, ChopDependencyError
+
+class CSVPlugin(ChopPlugin):
+    def __init__(self):
+        super().__init__(
+            name="CSV",
+            modes=["rows"],
+            extensions=[".csv"],
+            dependencies=[],
+            priority=5
+        )
+
+    def process(self, data_source, mode):
+        import csv
+        with open(data_source, 'r') as f:
+            reader = csv.reader(f)
+            # Example: returns the number of rows
+            return sum(1 for _ in reader)
+
+# This is the entry point for the plugin system
+plugin = CSVPlugin()
+
+Plugins in the chop_plugins directory are automatically discovered and loaded.
+Contribution
+We welcome contributions! If you have a feature request, bug report, or want to contribute code, please check out our contribution guidelines.
+
+---
+
+License: MIT
