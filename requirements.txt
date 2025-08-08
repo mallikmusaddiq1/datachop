@@ -1,12 +1,32 @@
-regex>=2024.5.15
-charset-normalizer>=3.3.2
-Pillow>=10.3.0
-moviepy>=1.0.3
-ffmpeg-python>=0.2.0
-PyPDF2>=3.0.1
-python-docx>=1.1.0
-odfpy>=1.4.1
-pydub>=0.25.1
-numpy>=1.26.4
-tqdm>=4.66.4
-redis>=5.0.4
+# requirements.txt
+
+# This file lists all direct dependencies required to run DataChop
+# without any optional features. Since there are no hard dependencies,
+# this file is empty by default.
+# For optional features, use the extra dependencies listed in pyproject.toml
+# or setup.py, for example:
+# pip install datachop[full]
+
+# If you need to install all dependencies for development, you can use:
+# pip install -r requirements_dev.txt
+
+# requirements_dev.txt
+# This file is for development and testing, including all optional dependencies.
+# It should be used for CI/CD or local development environment setup.
+
+# Optional Dependencies (for 'full' extra)
+regex
+Pillow
+numpy
+charset-normalizer
+tqdm
+redis
+
+# Development Dependencies (for 'dev' extra)
+pytest
+pytest-cov
+twine
+black
+isort
+mypy
+pylint
