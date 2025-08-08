@@ -1,54 +1,61 @@
-import setuptools
+# setup.py
 
-with open("README.md", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
+from setuptools import setup, find_packages
+import pathlib
 
-setuptools.setup(
+here = pathlib.Path(__file__).parent.resolve()
+long_description = (here / "README.md").read_text(encoding="utf-8")
+
+setup(
     name="datachop",
     version="1.0.0",
-    author="Mallik Mohammad Musaddiq",
-    author_email="mallikmusaddiq1@gmail.com", # Apni email yahan daal do
-    description="The Ultimate Slicing Module for various data types and files.",
+    description="A highly flexible and robust library for slicing and processing various data types.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/mallikmusaddiq1/datachop",
+    author="Mallik Mohammad Musaddiq",
+    author_email="mallikmusaddiq1@gmail.com",
+    license="MIT",
     classifiers=[
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
-        "Topic :: Software Development :: Libraries :: Python Modules",
-        "Topic :: Utilities",
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3 :: Only",
     ],
-    py_modules=["datachop"], # Isse single file package banega
-    python_requires=">=3.8",
+    keywords="slicing, data, processing, unicode, files, mmap",
+    packages=find_packages(),
+    python_requires=">=3.7, <4",
     install_requires=[
-        'regex>=2024.5.15',
-        'charset-normalizer>=3.3.2',
-        'Pillow>=10.3.0',
-        'moviepy>=1.0.3',
-        'ffmpeg-python>=0.2.0',
-        'PyPDF2>=3.0.1',
-        'python-docx>=1.1.0',
-        'odfpy>=1.4.1',
-        'pydub>=0.25.1',
-        'numpy>=1.26.4',
-        'tqdm>=4.66.4',
-        'redis>=5.0.4'
+        # No core dependencies
     ],
     extras_require={
-        'full': [
-            'pydub',
-            'pillow',
-            'moviepy',
-            'ffmpeg-python',
-            'pypdf2',
-            'python-docx',
-            'odfpy',
-            'numpy',
-            'tqdm',
-            'redis'
-        ]
-    }
+        "full": [
+            "regex",
+            "Pillow",
+            "numpy",
+            "charset-normalizer",
+            "tqdm",
+            "redis",
+            "pytest",
+        ],
+        "dev": [
+            "pytest",
+            "pytest-cov",
+            "twine",
+            "black",
+            "isort",
+            "mypy",
+            "pylint",
+        ],
+    },
+    project_urls={
+        "Bug Reports": "https://github.com/mallikmusaddiq1/datachop/issues",
+        "Source": "https://github.com/mallikmusaddiq1/datachop",
+    },
 )
